@@ -67,11 +67,12 @@ func Login(c *gin.Context) {
 // @Success 200 {object} map[string]interface{}
 // @Router /register [post]
 func Register(c *gin.Context) {
-	db := c.MustGet("db").(gorm.DB)
+	db := c.MustGet("db").(*gorm.DB)
 	var input RegisterInput
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	u := models.User{}
@@ -82,14 +83,14 @@ func Register(c *gin.Context) {
 
 	_, err := u.SaveUser(db)
 
-	if err != nil{
-		c.JSON(http.StatusBadRequest, gin.H("error": err.Error()))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
 	user := map[string]string{
-		"username":input.Username,
-		"email":input.Email,
+		"username": input.Username,
+		"email":    input.Email,
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message":"registration success", "user":user})
+	c.JSON(http.StatusOK, gin.H{"message": "registration success", "user": user})
 }
