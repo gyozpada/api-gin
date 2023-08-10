@@ -24,5 +24,5 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 
 	moviesMiddlewareRoute := r.Group("/movies")
 	moviesMiddlewareRoute.Use(middlewares.JwtAuthMiddleware())
-	moviesMiddlewareRoute.POST("/", controllers.CreateMovie)
+	// moviesMiddlewareRoute.POST("/", controllers.CreateMovie)
 }
