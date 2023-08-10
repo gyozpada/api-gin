@@ -16,7 +16,7 @@ func ConnectDatabase() *gorm.DB {
 	port := utils.Getenv("DATABASE_PORT", "3306")
 	database := utils.Getenv("DATABASE_NAME", "database_movie")
 
-	dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)%v?charset=utf8mb4&parseTime=True&loc=Local", username, password, host, port, database)
+	dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local", username, password, host, port, database)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {

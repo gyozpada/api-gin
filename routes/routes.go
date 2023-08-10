@@ -3,6 +3,7 @@ package routes
 import (
 	"api-gin/controllers"
 	"api-gin/middlewares"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -10,6 +11,11 @@ import (
 
 func SetupRouter(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "pong",
+		})
+	})
 
 	//set db to gin context
 	r.Use(func(c *gin.Context) {
